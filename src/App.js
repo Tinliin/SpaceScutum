@@ -1,42 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import ToDosList from "./components/todosList/todosList";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-
 function App() {
-const [list, setList] = useState('');
+  const [list, setList] = useState("");
+  const [isloading, setIsloading] = useState(false);
 
-useEffect(() => {
-  fetch(`https://jsonplaceholder.typicode.com/todos/`, {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      setList(data);
-    });
-}, []);
+  useEffect(() => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setList(data);
+        setIsloading(true);
+      });
+  }, []);
 
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  if (isloading === false) {
+    return <p>LOADING...</p>;
+  }
+  return <ToDosList list={list} />;
 }
 
 export default App;
