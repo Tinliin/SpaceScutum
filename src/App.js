@@ -1,7 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { useState, useEffect } from "react";
+
+
 function App() {
+const [list, setList] = useState('');
+
+useEffect(() => {
+  fetch(`https://jsonplaceholder.typicode.com/todos/`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      setList(data);
+    });
+}, []);
+
+
   return (
     <div className="App">
       <header className="App-header">
