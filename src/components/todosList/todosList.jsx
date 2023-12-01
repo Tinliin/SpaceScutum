@@ -1,11 +1,10 @@
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-function ToDosList ({list}) {
-    console.log(list);
+function ToDosList ({list, currentPage}) {
 return (
     <ListGroup>
-      {list.map((task) => (
+      {list.slice((currentPage-1)*10, currentPage*10).map((task) => (
         <ListGroupItem key={task.id}>
           <strong>{task.title}</strong>
           {task.completed ? (

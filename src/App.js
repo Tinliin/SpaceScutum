@@ -1,12 +1,13 @@
 import "./App.css";
 import ToDosList from "./components/todosList/todosList";
+import Pagination from "./components/pagination/pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [list, setList] = useState("");
-  const [isloading, setIsloading] = useState(false);
+  const [list, setList] = useState([]);
+  const [isloading, setIsloading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/todos/`, {
@@ -15,14 +16,26 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setList(data);
-        setIsloading(true);
+        setIsloading(false);
       });
   }, []);
 
-  if (isloading === false) {
-    return <p>LOADING...</p>;
-  }
-  return <ToDosList list={list} />;
+  function CurrentPageHandler (page) {
+    setCurrentPage(page);
+  };
+
+  return (
+    <div className="container-xl">
+      {isloading ? (
+        <p>LOADING...</p>
+      ) : (
+        <div className="container-fluid">
+          <ToDosList list={list} currentPage={currentPage} />
+          <Pagination list={list} currentPage={currentPage} CurrentPageHandler={CurrentPageHandler}/>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default App;
