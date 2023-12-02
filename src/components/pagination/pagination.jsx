@@ -9,7 +9,7 @@ const arrayOfNumbers = [];
 for (let i = 1; i < numberOfPages; i++) {
     arrayOfNumbers.push(i);
 };
-console.log(currentPage);
+console.log(list[3]);
 
 return (
     <Nav>
