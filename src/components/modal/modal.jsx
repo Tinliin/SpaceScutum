@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, Form } from "react-bootstrap";
 
-const ModalForm = ({ addtask }) => {
+const ModalForm = ({ addtask, hideModal }) => {
   const [title, setTitle] = useState("");
 
 
   return (
     <Modal show={true} onHide={() => setTitle("")}>
       <ModalBody>
-        <Form onSubmit={addtask}>
+        <Form >
           <Form.Group controlId="title">
             <Form.Label>Title</Form.Label>
             <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -16,8 +16,8 @@ const ModalForm = ({ addtask }) => {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button variant="primary" onClick={() => addtask(title)} type="submit">Submit</Button>
-        <Button variant="secondary" onClick={() => setTitle("")}>Cancel</Button>
+        <Button variant="primary" onClick={() => {addtask(title); hideModal()}} type="submit">Submit</Button>
+        <Button variant="secondary" onClick={() => {setTitle(""); hideModal()}}>Cancel</Button>
       </ModalFooter>
     </Modal>
   );

@@ -6,10 +6,9 @@ if (list%10!==0) {
     numberOfPages++;
 };
 const arrayOfNumbers = [];
-for (let i = 1; i < numberOfPages; i++) {
-    arrayOfNumbers.push(i);
+for (let i = 0; i < numberOfPages; i++) {
+    arrayOfNumbers.push(i+1);
 };
-console.log(list[3]);
 
 return (
     <Nav>
