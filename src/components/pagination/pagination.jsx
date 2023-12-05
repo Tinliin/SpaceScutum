@@ -5,6 +5,7 @@ let numberOfPages = Math.floor(list.length/10);
 if (list%10!==0) {
     numberOfPages++;
 };
+
 const arrayOfNumbers = [];
 for (let i = 0; i < numberOfPages; i++) {
     arrayOfNumbers.push(i+1);

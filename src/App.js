@@ -10,6 +10,9 @@ function App() {
   const [isloading, setIsloading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
+  const [idEdit, setIdEdit] = useState(0);
+  const [oldTitle, setOldTitle] = useState("");
 
   useEffect(() => {
     const localTasks = localStorage.getItem("Tasks");
@@ -33,38 +36,66 @@ function App() {
     setCurrentPage(page);
   }
 
-  function HiheModal (){
-    setModal(false)
+  function HiheModal() {
+    setModal(false);
+  }
+
+  function HiheModalEdit() {
+    setModalEdit(false);
   }
 
   function AddTask(task) {
     const newTask = {
       completed: false,
       title: task,
-      id: list.length+1
+      id: list.length + 1,
     };
     list.push(newTask);
     localStorage.setItem("Tasks", JSON.stringify(list));
+  }
+
+  function DellTask(id) {
+    const newList = list.filter((task) => task.id !== id);
+    setList(newList);
+    localStorage.setItem("Tasks", JSON.stringify(newList));
+  }
+
+  function ModalEdit(id, oldTitle) {
+    setModalEdit(true);
+    setIdEdit(id);
+    setOldTitle(oldTitle);
+  }
+
+  function EditTask(id, title) {
+    const newList = list.map((task) => {
+      if (task.id === id) {
+        console.log(task.title);
+        task.title = title;
+        
+      }
+      return task;
+    });
+    setList(newList);
   };
 
-function DellTask (id) {
-  const index = list.findIndex((obj)=> obj.id === id);
-  const newList = list.filter((task) => task.id !== id);
-  setList(newList);
-  localStorage.setItem("Tasks", JSON.stringify(newList));
-};
-
   return (
+  
     <div className="container-xl">
+      <h3 className="list_header">My todos list</h3>
       {isloading ? (
         <p>LOADING...</p>
       ) : (
         <div className="container-fluid">
-          <ToDosList list={list} dellTask={DellTask} currentPage={currentPage} />
+          <ToDosList
+            list={list}
+            dellTask={DellTask}
+            editTask={ModalEdit}
+            currentPage={currentPage}
+          />
           <button
             type="button"
             className="btn btn-outline-success"
-            onClick={()=>setModal(true)}
+            onClick={() => setModal(true)}
           >
             Add task
           </button>
@@ -75,8 +106,18 @@ function DellTask (id) {
           />
         </div>
       )}
-      {modal? <ModalForm addtask={AddTask} hideModal={HiheModal}/> : <></>}
-     </div>
+      {modal ? <ModalForm onSubmit={AddTask} hideModal={HiheModal} /> : <></>}
+      {modalEdit ? (
+        <ModalForm
+          onSubmit={EditTask}
+          oldTitle={oldTitle}
+          hideModal={HiheModalEdit}
+          id={idEdit}
+        />
+      ) : (
+        <></>
+      )}
+    </div>
   );
 }
 

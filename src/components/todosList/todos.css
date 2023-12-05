@@ -1,0 +1,14 @@
+
+.list-group-item {
+    border-radius: 8px;
+    background-color:rgba(0, 0, 0, 0.9);
+}
+
+.btn-danger {
+    margin-left: 15px;
+}
+
+.btn-success {
+    margin-left: 15px;
+}
+

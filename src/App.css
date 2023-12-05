@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.list_header {
+  font-size: 46px;
+  text-align: center;
+  font-family: sans-serif, 'Arial Narrow', Arial;
+  font-style: italic;
+  color: #505052;
+}

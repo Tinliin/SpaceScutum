@@ -1,7 +1,8 @@
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import './todos.css'
 
-function ToDosList ({list, currentPage, dellTask}) {
+function ToDosList ({list, currentPage, dellTask, editTask}) {
 return (
     <ListGroup>
       {list.slice((currentPage-1)*10, currentPage*10).map((task) => (
@@ -17,6 +18,8 @@ return (
   <label className="form-check-label" for="defaultCheck1">
     Done
   </label>
+  <button type="button" class="btn btn-success" onClick={()=>editTask(task.id, task.title)} >EDIT</button>
+
   <button type="button" className="btn btn-danger" onClick={()=>dellTask(task.id)} >DEL</button>
 
 </div>
